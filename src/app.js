@@ -9,7 +9,7 @@ const cy = cytoscape({
   container: document.getElementById('canvas'),
 
   style: cytoscape.stylesheet()
-    .selector('node').css({ 'content': 'data(value)' })
+    .selector('node').css({ 'content': 'data(id)' })
     .selector('edge').css({ 'content': 'data(weight)' })
     .selector('#start').css({ 'background-color': '#00C853' })
     .selector('#finish').css({ 'background-color': '#DD2C00' }),
@@ -48,20 +48,20 @@ function main() {
 let interval = setInterval(main, 50);
 
 $('#interval').change(function() {
-  $('#i').text($(this).val());
+  $('#intervalSpan').text($(this).val());
   clearInterval(interval);
   interval = setInterval(main, $(this).val());
 });
 
-$('#nodes').change(function() {
-  $('#n').text($(this).val());
+$('#nodeCount').change(function() {
+  $('#nodeCountSpan').text($(this).val());
   NODE_COUNT = $(this).val();
   tree = new Tree(window.innerWidth, window.innerHeight, NODE_COUNT, EDGE_COUNT);
   tree.generateTree();
 });
 
-$('#edges').change(function() {
-  $('#e').text($(this).val());
+$('#edgeCount').change(function() {
+  $('#edgeCountSpan').text($(this).val());
   EDGE_COUNT = $(this).val();
   tree = new Tree(window.innerWidth, window.innerHeight, NODE_COUNT, EDGE_COUNT);
   tree.generateTree();
@@ -76,3 +76,30 @@ $('#pause').click(function() {
     interval = setInterval(main, $('#interval').val());
   }
 });
+
+$('#toggleNames, #toggleLabels, #toggleEdges').change(function() {
+  css();
+});
+
+function css() {
+  let node = 'data(id)';
+  let edge = 'data(weight)';
+
+  if ($('#toggleNames').prop('checked')) {
+    node = 'data(value)';
+  }
+
+  if (!$('#toggleEdges').prop('checked')) {
+    edge = '';
+  }
+
+  if (!$('#toggleLabels').prop('checked')) {
+    node = edge = '';
+  }
+
+  cy.style(cytoscape.stylesheet()
+    .selector('node').css({ 'content': node })
+    .selector('edge').css({ 'content': edge })
+    .selector('#start').css({ 'background-color': '#00C853' })
+    .selector('#finish').css({ 'background-color': '#DD2C00' }));
+}

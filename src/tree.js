@@ -56,9 +56,11 @@ class Tree {
 
   generateEdges() {
     for (let i = 0; i < this.nodes.length; i++) {
-      const source = this.nodes[i];
+      this.nodes[i].edges = [];
+    }
 
-      source.edges = [];
+    for (let i = 0; i < this.nodes.length; i++) {
+      const source = this.nodes[i];
 
       const distances = [];
       for (let j = 0; j < this.nodes.length; j++) {
@@ -75,6 +77,7 @@ class Tree {
       // sort nodes by closest to current node, slice to get only the closest EDGE_COUNT number of edges
       distances.sort((a, b) => a.distance - b.distance).slice(0, this.EDGE_COUNT).forEach(({ index, distance }) => {
         source.addEdge(new Edge(this.nodes[index], Math.round(distance)));
+        this.nodes[index].addEdge(new Edge(source, Math.round(distance)));
       });
     }
   }

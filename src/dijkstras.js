@@ -3,29 +3,26 @@ class Dijkstras {
   constructor(nodes) {
     this.nodes = {};
 
-    nodes.forEach(({ id, edges }) => {
-      this.nodes[id] = {
-        value: Number.MAX_SAFE_INTEGER,
-        done: false,
-        edges,
-        id,
-      };
+    nodes.forEach(({ id }, index) => {
+      nodes[index].value = Number.MAX_SAFE_INTEGER;
+      nodes[index].checked = false;
+      this.nodes[id] = nodes[index];
     });
 
     this.nodes['start'].value = 0;
     
-    while(!this.allDone()) {
+    while(!this.allChecked()) {
       let currentNode = this.getLowestValueNode();
 
-      currentNode.edges.filter(({ node }) => !node.done).forEach(({ node, weight }) => {
-        const sum = this.nodes[currentNode.id].value + weight;
+      currentNode.edges.filter(({ node }) => !node.checked).forEach(({ node, weight }) => {
+        const sum = currentNode.value + weight;
 
-        if (sum < this.nodes[node.id].value) {
-          this.nodes[node.id].value = sum;
+        if (sum < node.value) {
+          node.value = sum;
         }
       });
 
-      this.nodes[currentNode.id].done = true;
+      currentNode.checked = true;
     }
   }
 
@@ -33,7 +30,7 @@ class Dijkstras {
     let currentNode = this.nodes['finish'];
     const path = ['finish'];
 
-    while (currentNode.id != 'start') {
+    do {
       const lowestNode = currentNode.edges.sort((a, b) => {
         return this.nodes[a.node.id].value - this.nodes[b.node.id].value;
       })[0];
@@ -51,8 +48,8 @@ class Dijkstras {
         break;
       }
 
-      currentNode = lowestNode.node;
-    }
+      currentNode = this.nodes[lowestNode.node.id];
+    } while (currentNode.id != 'start')
   
     return path;
   }
@@ -61,13 +58,13 @@ class Dijkstras {
     return this.nodes;
   }
 
-  allDone() {
-    return Object.values(this.nodes).filter(({ done }) => !done).length == 0;
+  allChecked() {
+    return Object.values(this.nodes).filter(({ checked }) => !checked).length == 0;
   }
 
   getLowestValueNode() {
     return Object.values(this.nodes)
-      .filter(({ done }) => !done)
+      .filter(({ checked }) => !checked)
       .sort((a, b) => a.value - b.value)[0];
   }
 }

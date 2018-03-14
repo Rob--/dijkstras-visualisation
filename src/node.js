@@ -15,14 +15,18 @@ class Node {
     this.dx = Node.dx * (Math.round(Math.random()) == 0 ? -1 : 1);
     this.dy = Node.dy * (Math.round(Math.random()) == 0 ? -1 : 1);
 
+    this.dx *= 1 + Math.random() * 0.2;
+    this.dx *= 1 + Math.random() * 0.2;
+
     this.id = id;
 
     this.edges = [];
     this.value = Number.MAX_SAFE_INTEGER;
+    this.checked = false;
   }
 
-  addEdge(node) {
-    this.edges.push(node);
+  addEdge(edge) {
+    this.edges.push(edge);
   }
 
   updatePosition() {

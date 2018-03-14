@@ -6,14 +6,18 @@
   <div id="canvas"></div>
 
   <div class="settings">
-    <div>edge count: <span id="e">5</span></div>
-    <input id="edges" type="range" value="5" min="2" max="10">
+    <div>edge count: <span id="edgeCountSpan">5</span></div>
+    <input id="edgeCount" type="range" value="5" min="2" max="10">
 
-    <div>node count: <span id="n">15</span></div>
-    <input id="nodes" type="range" value="15" min="3" max="100">
+    <div>node count: <span id="nodeCountSpan">15</span></div>
+    <input id="nodeCount" type="range" value="15" min="3" max="100">
     
-    <div>update interval: <span id="i">40</span></div>
+    <div>update interval: <span id="intervalSpan">40</span></div>
     <input id="interval" type="range" value="40" min="10" max="500">
+
+    <div>toggle node weight/name <input id="toggleNames" type="checkbox"></div>
+    <div>toggle edge weights <input checked="true" id="toggleEdges" type="checkbox"></div>
+    <div>toggle labels <input checked="true" id="toggleLabels" type="checkbox"></div>
 
     <button type="button" id="pause">toggle pause</button>
 
