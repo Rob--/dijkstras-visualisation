@@ -1,13 +1,9 @@
 let NODE_COUNT = 15;
 let EDGE_COUNT = 5;
 
-let tree;
+let tree = new Tree(window.innerWidth, window.innerHeight, NODE_COUNT, EDGE_COUNT);
+tree.generateTree();
 let paused = false;
-
-(window.regen = function() {
-  tree = new Tree(window.innerWidth, window.innerHeight, NODE_COUNT, EDGE_COUNT);
-  tree.generateTree();
-}());
 
 const cy = cytoscape({
   container: document.getElementById('canvas'),
@@ -60,13 +56,15 @@ $('#interval').change(function() {
 $('#nodes').change(function() {
   $('#n').text($(this).val());
   NODE_COUNT = $(this).val();
-  regen()
+  tree = new Tree(window.innerWidth, window.innerHeight, NODE_COUNT, EDGE_COUNT);
+  tree.generateTree();
 });
 
 $('#edges').change(function() {
   $('#e').text($(this).val());
   EDGE_COUNT = $(this).val();
-  regen()
+  tree = new Tree(window.innerWidth, window.innerHeight, NODE_COUNT, EDGE_COUNT);
+  tree.generateTree();
 });
 
 $('#pause').click(function() {
