@@ -1,3 +1,7 @@
+import Node from './node';
+import Edge from './edge';
+import Dijkstras from './dijkstras';
+
 class Tree {
   
   constructor(width, height, NODE_COUNT = 15, EDGE_COUNT = 5, dx = 0.00075, dy = 0.00075) {
@@ -89,3 +93,5 @@ class Tree {
   }
 
 }
+
+export default Tree;

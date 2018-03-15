@@ -37,17 +37,6 @@ class Dijkstras {
 
       path.push(lowestNode.node.id);
 
-      // debug stuff, something is broken
-      // when it crashes, the nodes' `lowest value` is Number.MAX_SAFE_INTEGER
-      // so maybe the algorithm itself has a bug
-      if (path.length > Object.keys(this.nodes).length) {
-        console.log('Broken!');
-        console.log(path);
-        console.log(this.nodes);
-        console.log(currentNode);
-        break;
-      }
-
       currentNode = this.nodes[lowestNode.node.id];
     } while (currentNode.id != 'start')
   
@@ -68,3 +57,5 @@ class Dijkstras {
       .sort((a, b) => a.value - b.value)[0];
   }
 }
+
+export default Dijkstras;

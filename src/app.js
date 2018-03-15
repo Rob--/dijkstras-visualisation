@@ -1,3 +1,5 @@
+import Tree from './tree';
+
 let NODE_COUNT = 15;
 let EDGE_COUNT = 5;
 
